@@ -51,6 +51,7 @@ function Filter({ filterField, options }) {
           key={option.value}
           onClick={() => handleClick(option.value)}
           $active={option.value === currentFilter}
+          disabled={option.value === currentFilter}
         >
           {option.label}
         </FilterButton>
@@ -61,8 +62,17 @@ function Filter({ filterField, options }) {
 
 export default Filter;
 
-// Why use a transient prop
+/* Why use a transient prop ($active)?
+   The `active` prop is not a valid HTML attribute for a <button>`,
+   so passing it directly causes a React warning.
 
-// Styled-components provides a clean solution: prefix the prop with $ so it won’t be forwarded to the DOM.Because active is not a valid HTML attribute for a <button>.Props starting with $ are used by styled-components only
-// They are NOT passed to the DOM
-// So React never sees active={false} → no warning
+  Styled-components solves this with "transient props":
+  prefix the prop with `$` (e.g., `$active`).
+
+  Transient props are:
+   - Used only inside styled-components for styling
+   - NOT forwarded to the DOM
+
+  This prevents React from rendering invalid attributes
+  like `active={false}` and avoids warnings.
+*/
