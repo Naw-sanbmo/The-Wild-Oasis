@@ -9,6 +9,7 @@ import { useSignup } from "./useSignup";
 
 function SignupForm() {
   const { signup, isPending } = useSignup();
+
   const { register, getValues, formState, handleSubmit, reset } = useForm();
   const { errors } = formState;
 
@@ -81,7 +82,12 @@ function SignupForm() {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button $variation="secondary" type="reset" disabled={isPending}>
+        <Button
+          $variation="secondary"
+          type="reset"
+          disabled={isPending}
+          onClick={reset}
+        >
           Cancel
         </Button>
         <Button disabled={isPending}>Create new user</Button>
